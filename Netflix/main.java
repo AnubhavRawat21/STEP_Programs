@@ -1,48 +1,57 @@
 package Netflix;
+import java.util.ArrayList;
+import java.util.List;
+
 class Main {
 
     public static void main(String[] args) {
 
-        Catalog catalog = new Catalog();
-
         Content c1 =
-                new Content(
-                        "N101",
-                        "Stranger Things",
-                        "Sci-Fi",
-                        55
-                );
+            new Content(
+                "C101",
+                "Stranger Things",
+                "Sci-Fi",
+                55
+            );
 
         Content c2 =
-                new Content(
-                        "N102",
-                        "Money Heist",
-                        "Crime",
-                        48
-                );
-
-        catalog.addContent(c1);
-        catalog.addContent(c2);
-
-        System.out.println("All Content:");
-        catalog.displayAll();
-
-        System.out.println("\nSearch:");
-
-        Content result =
-                catalog.searchByTitle("Money Heist");
-
-        if (result != null) {
-
-            System.out.println(
-                    result.getTitle()
-                    + " Found"
+            new Content(
+                "C102",
+                "Money Heist",
+                "Crime",
+                48
             );
-        }
 
-        catalog.removeContentById("N101");
+        Profile p1 =
+            new Profile(
+                "John",
+                "Adult"
+            );
 
-        System.out.println("\nAfter Removal:");
-        catalog.displayAll();
+        Profile p2 =
+            new Profile(
+                "Kids",
+                "Child"
+            );
+
+        p1.addToWatchList(c1);
+        p1.addToWatchList(c2);
+
+        List<Profile> profiles =
+            new ArrayList<>();
+
+        profiles.add(p1);
+        profiles.add(p2);
+
+        User user =
+            new User(
+                "U101",
+                "John Doe",
+                profiles
+            );
+
+        user.displayProfiles();
+
+        p1.displayWatchList();
     }
 }
