@@ -1,9 +1,12 @@
 package Netflix;
+
 import java.util.List;
 class User {
 
     private String userId;
     private String name;
+
+    private SubscriptionPlan plan;
 
     private List<Profile> profiles;
 
