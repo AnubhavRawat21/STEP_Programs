@@ -1,4 +1,4 @@
-package ComapnyOrder;
+package CompanyOrder;
 
 class RegisteredCustomer extends Customer {
     

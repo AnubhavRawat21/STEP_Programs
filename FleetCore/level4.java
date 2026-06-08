@@ -11,6 +11,7 @@ class V {
         this.speed = speed;
     }
 
+    @SuppressWarnings("unused")
     String describe() {
         return "V " + brand + ": " + speed + " km/h";
     }

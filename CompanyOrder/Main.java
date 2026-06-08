@@ -1,9 +1,9 @@
-package ComapnyOrder;
+package CompanyOrder;
 
 import java.util.ArrayList;
 
-public class TestMain {
-    public static void TestMain(String[] args) {
+public class Main {
+    public static void Main(String[] args) {
         Company c1 = new Company("Tech Innovators");
         Company c2 = new Company("Health Solutions");
         Company c3 = new Company("Green Energy");

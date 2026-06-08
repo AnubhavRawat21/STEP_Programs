@@ -1,4 +1,4 @@
-package ComapnyOrder;
+package CompanyOrder;
 
 class Item {
     private int itemNumber;

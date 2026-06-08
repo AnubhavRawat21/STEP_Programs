@@ -1,4 +1,4 @@
-package ComapnyOrder;
+package CompanyOrder;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,13 @@ class Company {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void addItem(Item item) {
         items.add(item);
     }
+
 
     public ArrayList<Item> getItems() {
         return (ArrayList<Item>) this.items;
