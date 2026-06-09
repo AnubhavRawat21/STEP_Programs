@@ -1,22 +1,39 @@
 package CompanyOrder;
 
+import java.util.ArrayList;
+
 class Customer {
     private String name;
-    private String id;
-    public Customer(String name,String id) {
+    private String customerId;
+    private ArrayList<Order> orders;
+ 
+    public Customer(String name,String customerId) {
         this.name = name;
-        this.id=id;
+        this.customerId= customerId;
+        this.orders= new ArrayList<>();
     }
+
     public String getName() {
-        return name;
+        return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getId(){
-        return id;
+        return this.customerId;
     }
-    public void setId() {
-        this.id = id;
+
+    public void setId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public ArrayList<Order> getOrder(){
+        return (ArrayList<Order>) this.orders;
+    }
+
+    public void addOrder(Order order){
+        orders.add(order);
     }
 }

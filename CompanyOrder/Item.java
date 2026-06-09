@@ -4,11 +4,13 @@ class Item {
     private int itemNumber;
     private String title;
     private int rate;
+    
 
     public Item(int itemNumber, String title, int rate) {
         this.itemNumber = itemNumber;
         this.title = title;
         this.rate = rate;
+        
     }
 
     public int getItemNumber() {
