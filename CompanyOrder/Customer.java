@@ -36,4 +36,29 @@ class Customer {
     public void addOrder(Order order){
         orders.add(order);
     }
+
+    public double getTotalOrderValueV1()
+    {
+        double totalOrderValue=0.0;
+
+        for(Order order:this.getOrder()){
+            for(OrderItem orderItem:order.getOrderItems()){
+                    totalOrderValue+= orderItem.getQuantity()*orderItem.getItem().getRate();
+                }
+            }
+        return totalOrderValue;
+    }
+
+    public double getTotalOrderValueV2(){
+        double totalOrderValue = 0.0;
+       
+        //No if else and any type of customer and still the logic will worl seamlessly without a change in this code
+        //Satisfies OCP - Open Closed Principle
+        for(Order order: this.getOrder()){
+            totalOrderValue = order.getTotalOrderValue();
+        }
+        return totalOrderValue;
+    }
+ 
+
 }

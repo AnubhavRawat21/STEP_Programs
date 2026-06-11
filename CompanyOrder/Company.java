@@ -60,18 +60,37 @@ class Company {
     //     orderItems.add(orderItem);
     // }
 
-    public double getTotalOrderValue()
+    public double getTotalOrderValueV1()
     {
         double totalOrderValue=0.0;
 
         for(Customer customer:this.customers){
             for(Order order:customer.getOrder()){
                 for(OrderItem orderItem:order.getOrderItems()){
-                totalOrderValue+= orderItem.getQuantity()*orderItem.getItem().getRate();
+                    // if (customer instanceof RegisteredCustomer){
+                    //     RegisteredCustomer rc= (RegisteredCustomer) customer;
+                    //     double discount= rc.getDiscount();
+                    //     totalOrderValue+= orderItem.getQuantity()*orderItem.getItem().getRate() * (1-discount)/100;
+                    // }
+                    // else{
+                    //     totalOrderValue+= orderItem.getQuantity()*orderItem.getItem().getRate();
+                    // }
                 }
 
             }
         }
+        return totalOrderValue;
+    }
+
+    public double getTotalOrderValueV2(){
+        double totalOrderValue = 0.0;
+       
+        //No if else and any type of customer and still the logic will worl seamlessly without a change in this code
+        //Satisfies OCP - Open Closed Principle
+        for(Customer customer: this.customers){
+            totalOrderValue = customer.getTotalOrderValueV2();
+        }
+        
         return totalOrderValue;
     }
 

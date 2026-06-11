@@ -39,5 +39,11 @@ class Order {
         this.orderItems.add(orderItem);
     }
     
-
+    public double getTotalOrderValue()
+    {
+        double totalOrderValue=0.0;
+        for (OrderItem o: this.getOrderItems()){
+            totalOrderValue = o.getOrderItemsValue();}
+        return totalOrderValue;
+    }
 }

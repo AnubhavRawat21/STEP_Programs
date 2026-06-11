@@ -52,7 +52,10 @@ public class TestMain
         //-----------------------
         //Registered customer walked into the store
 
-        var registeredCustomer= new RegisteredCustomer("Siddhant","1",10.0);
+        var registeredCustomer= new RegisteredCustomer("Siddhant","1");
+        var membershipFactory= new MembershipFactory();
+        registeredCustomer.SetMembership(membershipFactory.getMembership("Platinum"));
+
         var orderItem3 = new OrderItem(pant,2);
         var orderItem4 = new OrderItem(shoes,2);
 
@@ -66,7 +69,7 @@ public class TestMain
         registeredCustomer.addOrder(registeredOrder);
         company.addCustomer(registeredCustomer);
 
-        System.out.println(company.getTotalOrderValue());
+        System.out.println(company.getTotalOrderValueV2());
 
         // System.out.println(company.getCustomers().get(0).getName()+" has bought "+company.getTotalOrderValue());
         // System.out.println(company.getCustomers().get(1).getName()+" has bought "+company.getTotalOrderValue());

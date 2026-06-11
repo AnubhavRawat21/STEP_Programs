@@ -25,4 +25,10 @@ public class OrderItem {
     public void setQuantity(int quantity){
         this.quantity= quantity;
     }
+
+    public double getOrderItemsValue(){
+        double totalOrderValue = 0.0;
+        totalOrderValue= this.quantity * this.item.getRate();
+        return totalOrderValue;
+    }
 }
