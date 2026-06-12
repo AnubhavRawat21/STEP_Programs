@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OpenSavingsAccountDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.dtos</a> &gt; <span class="el_source">OpenSavingsAccountDTO.java</span></div><h1>OpenSavingsAccountDTO.java</h1><pre class="source lang-java linenums">package com.gdb.dtos;
+
+import java.time.LocalDate;
+
+public class OpenSavingsAccountDTO extends OpenAccountDTO {
+    private LocalDate dateOfBirth;
+    private GenderDTO gender;
+    private String phoneNumber;
+    private String aadharNumber; // https://aadhar-service.vercel.app/docs
+
+    public OpenSavingsAccountDTO(
+            String name,
+            String phoneNumber,
+            GenderDTO gender,
+            LocalDate dateOfBirth,
+            String aadharNumber,
+            double initialAmount,
+            PrivilegeDTO privilegeDTO,
+            String pinNumber) {
+<span class="fc" id="L20">        super(name, privilegeDTO, pinNumber, initialAmount);</span>
+<span class="fc" id="L21">        this.dateOfBirth = dateOfBirth;</span>
+<span class="fc" id="L22">        this.gender = gender;</span>
+<span class="fc" id="L23">        this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L24">        this.aadharNumber = aadharNumber;</span>
+<span class="fc" id="L25">    }</span>
+
+    public String getAadharNumber() {
+<span class="fc" id="L28">        return aadharNumber;</span>
+    }
+
+    public void setAadharNumber(String aadharNumber) {
+<span class="nc" id="L32">        this.aadharNumber = aadharNumber;</span>
+<span class="nc" id="L33">    }</span>
+
+    public LocalDate getDateOfBirth() {
+<span class="fc" id="L36">        return dateOfBirth;</span>
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+<span class="fc" id="L40">        this.dateOfBirth = dateOfBirth;</span>
+<span class="fc" id="L41">    }</span>
+
+    public GenderDTO getGenderDTO() {
+<span class="fc" id="L44">        return gender;</span>
+    }
+
+    public void setGenderDTO(GenderDTO gender) {
+<span class="nc" id="L48">        this.gender = gender;</span>
+<span class="nc" id="L49">    }</span>
+
+    public String getPhoneNumber() {
+<span class="fc" id="L52">        return phoneNumber;</span>
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+<span class="nc" id="L56">        this.phoneNumber = phoneNumber;</span>
+<span class="nc" id="L57">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

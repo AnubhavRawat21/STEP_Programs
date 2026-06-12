@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.controllers</a> &gt; <span class="el_source">AccountController.java</span></div><h1>AccountController.java</h1><pre class="source lang-java linenums">package com.gdb.controllers;
+
+import com.gdb.services.IAccountService;
+import com.gdb.dtos.OpenAccountDTO;
+import com.gdb.dtos.OpenCurrentAccountDTO;
+import com.gdb.dtos.OpenSavingsAccountDTO;
+import com.gdb.dtos.responses.OpenAccountResponse;
+import com.gdb.dtos.CloseAccountDTO;
+import com.gdb.dtos.responses.CloseAccountResponse;
+import com.gdb.exceptions.*;
+import com.gdb.utils.AccountValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Controller responsible for handling all account-related operations.
+ * Acts as the entry point for the UI, performing initial request validation
+ * and routing valid requests to the underlying Account Service.
+ */
+public class AccountController implements IAccountController {
+
+<span class="fc" id="L22">    private static final Logger logger = LogManager.getLogger(AccountController.class);</span>
+    private IAccountService accountService;
+    private AccountValidator validator;
+
+<span class="fc" id="L26">    public AccountController(IAccountService accountService, AccountValidator validator) {</span>
+<span class="fc" id="L27">        this.accountService = accountService;</span>
+<span class="fc" id="L28">        this.validator = validator;</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Entry point for opening a new account (Savings or Current).
+     * 
+     * @param openAccountDto Object containing the requested account configuration.
+     * @return OpenAccountResponse indicating the HTTP status and outcome message.
+     */
+    @Override
+    public OpenAccountResponse openAccount(OpenAccountDTO openAccountDto) {
+
+        /*
+         * Account Controller Validation:
+         *
+         * 1. Validate Account information.
+         * 2. If there is an error, we send the message back along with the status.
+         * 3. Send account to account service.
+         */
+<span class="fc" id="L47">        logger.info(&quot;Controller: Received request to open account for {}&quot;, openAccountDto.getName());</span>
+        try {
+<span class="fc" id="L49">            validateAccountInformation(openAccountDto);</span>
+<span class="fc" id="L50">        } catch (InvalidInputException e) {</span>
+<span class="fc" id="L51">            logger.warn(&quot;Controller: Account validation failed: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L52">            OpenAccountResponse response = new OpenAccountResponse(openAccountDto);</span>
+<span class="fc" id="L53">            response.setResponseStatus(400, &quot;Validation Error: &quot; + e.getMessage());</span>
+<span class="fc" id="L54">            return response;</span>
+<span class="fc" id="L55">        }</span>
+
+<span class="fc" id="L57">        OpenAccountResponse response = null;</span>
+        try {
+<span class="fc" id="L59">            response = accountService.openAccount(openAccountDto);</span>
+<span class="fc" id="L60">            response.setResponseStatus(200, &quot;Account Opened Successfully&quot;);</span>
+<span class="fc" id="L61">            logger.info(&quot;Controller: Account opened successfully for {}&quot;, openAccountDto.getName());</span>
+<span class="fc" id="L62">        } catch (AccountCreationException e) {</span>
+<span class="fc" id="L63">            logger.error(&quot;Controller: Account opening failed: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L64">            response = new OpenAccountResponse(openAccountDto);</span>
+<span class="fc" id="L65">            response.setResponseStatus(400, &quot;Error: &quot; + e.getMessage());</span>
+<span class="fc" id="L66">        } catch (Exception e) {</span>
+<span class="fc" id="L67">            logger.error(&quot;Controller: Unexpected error during account opening&quot;, e);</span>
+<span class="fc" id="L68">            response = new OpenAccountResponse(openAccountDto);</span>
+<span class="fc" id="L69">            response.setResponseStatus(500, &quot;Internal Server Error: &quot; + e.getMessage());</span>
+<span class="fc" id="L70">        }</span>
+
+<span class="fc" id="L72">        return response;</span>
+    }
+
+    protected void validateAccountInformation(OpenAccountDTO openAccountDto) throws InvalidInputException {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (openAccountDto == null) {</span>
+<span class="nc" id="L77">            throw new InvalidInputException(&quot;Account details cannot be null&quot;);</span>
+        }
+
+        // Base validations
+<span class="fc" id="L81">        validator.validateName(openAccountDto.getName());</span>
+<span class="fc" id="L82">        validator.validatePin(openAccountDto.getPinNumber());</span>
+<span class="fc" id="L83">        validator.validateInitialAmount(openAccountDto.getInitialAmount());</span>
+<span class="fc" id="L84">        validator.validateMinimumBalance(openAccountDto.getPrivilegeDTO(),</span>
+<span class="fc" id="L85">                openAccountDto.getInitialAmount());</span>
+
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (openAccountDto instanceof OpenSavingsAccountDTO) {</span>
+<span class="fc" id="L88">            var savings = (OpenSavingsAccountDTO) openAccountDto;</span>
+<span class="fc" id="L89">            validator.validatePhoneNumber(savings.getPhoneNumber());</span>
+<span class="fc" id="L90">            validator.validateAadharNumber(savings.getAadharNumber());</span>
+<span class="pc bnc" id="L91" title="All 2 branches missed.">        } else if (openAccountDto instanceof OpenCurrentAccountDTO) {</span>
+<span class="nc" id="L92">            var current = (OpenCurrentAccountDTO) openAccountDto;</span>
+<span class="nc" id="L93">            validator.validateCompanyName(current.getCompanyName());</span>
+<span class="nc" id="L94">            validator.validateCompanyRegistrationNumber(current.getRegistrationNumber());</span>
+<span class="nc" id="L95">            validator.validateWebsiteURL(current.getWebsiteURL());</span>
+        }
+<span class="fc" id="L97">    }</span>
+
+    @Override
+    public CloseAccountResponse closeAccount(CloseAccountDTO closeAccountDto) {
+<span class="nc" id="L101">        logger.info(&quot;Controller: Received request to close account {}&quot;,</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                closeAccountDto != null ? closeAccountDto.getAccountNumber() : &quot;null&quot;);</span>
+
+        try {
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            if (closeAccountDto == null) {</span>
+<span class="nc" id="L106">                throw new InvalidInputException(&quot;Account details cannot be null&quot;);</span>
+            }
+<span class="nc" id="L108">            validator.validateAccountNumber(closeAccountDto.getAccountNumber());</span>
+<span class="nc" id="L109">        } catch (InvalidInputException e) {</span>
+<span class="nc" id="L110">            logger.warn(&quot;Controller: Account validation failed: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L111">            CloseAccountResponse response = new CloseAccountResponse(closeAccountDto);</span>
+<span class="nc" id="L112">            response.setResponseStatus(400, &quot;Validation Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L113">            return response;</span>
+<span class="nc" id="L114">        }</span>
+
+<span class="nc" id="L116">        CloseAccountResponse response = null;</span>
+        try {
+<span class="nc" id="L118">            response = accountService.closeAccount(closeAccountDto);</span>
+<span class="nc" id="L119">            logger.info(&quot;Controller: Account {} closed successfully&quot;, closeAccountDto.getAccountNumber());</span>
+<span class="nc" id="L120">        } catch (AccountRecordNotFoundException e) {</span>
+<span class="nc" id="L121">            logger.error(&quot;Controller: Close account failed: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L122">            response = new CloseAccountResponse(closeAccountDto);</span>
+<span class="nc" id="L123">            response.setResponseStatus(400, &quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L124">        } catch (AccountNotActiveException e) {</span>
+<span class="nc" id="L125">            logger.error(&quot;Controller: Close account failed: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L126">            response = new CloseAccountResponse(closeAccountDto);</span>
+<span class="nc" id="L127">            response.setResponseStatus(400, &quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L128">        } catch (Exception e) {</span>
+<span class="nc" id="L129">            logger.error(&quot;Controller: Unexpected error during account closure&quot;, e);</span>
+<span class="nc" id="L130">            response = new CloseAccountResponse(closeAccountDto);</span>
+<span class="nc" id="L131">            response.setResponseStatus(500, &quot;Internal Server Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L132">        }</span>
+
+<span class="nc" id="L134">        return response;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

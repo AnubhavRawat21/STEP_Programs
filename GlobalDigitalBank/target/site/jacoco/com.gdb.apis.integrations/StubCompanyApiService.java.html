@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StubCompanyApiService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.apis.integrations</a> &gt; <span class="el_source">StubCompanyApiService.java</span></div><h1>StubCompanyApiService.java</h1><pre class="source lang-java linenums">package com.gdb.apis.integrations;
+
+import java.util.Arrays;
+import java.util.List;
+
+<span class="nc" id="L6">public class StubCompanyApiService implements ICompanyApiService {</span>
+
+    // Valid company registration numbers from the API mock
+<span class="nc" id="L9">    private static final List&lt;String&gt; VALID_COMPANY_REGISTRATION_NUMBERS = Arrays.asList(</span>
+            &quot;L01111TN2022PLC444333&quot;,
+            &quot;L10101UP2022PLC000999&quot;,
+            &quot;L15142UP2020PLC012345&quot;,
+            &quot;L17110WB2018PLC666777&quot;,
+            &quot;L18101MH2020PLC222333&quot;,
+            &quot;L22213WB2023PLC666555&quot;,
+            &quot;L24233WB2017PLC678901&quot;,
+            &quot;L27100TN2019PLC444555&quot;,
+            &quot;L28920AP2020PLC888999&quot;,
+            &quot;L29130AP2019PLC890123&quot;,
+            &quot;L32109UP2019PLC000111&quot;,
+            &quot;L36911AP2021PLC888777&quot;,
+            &quot;L67120MH2019PLC234567&quot;,
+            &quot;L74140MH2021PLC222111&quot;,
+            &quot;L85110TN2018PLC456789&quot;,
+            &quot;U45200HR2023PTC789012&quot;,
+            &quot;U46100DL2022PTC333444&quot;,
+            &quot;U47910HR2020PTC777666&quot;,
+            &quot;U51909GJ2022PTC567890&quot;,
+            &quot;U52100HR2021PTC777888&quot;,
+            &quot;U55101KA2023PTC111000&quot;,
+            &quot;U58182RJ2023PTC999888&quot;,
+            &quot;U62013RJ2021PTC901234&quot;,
+            &quot;U64200GJ2023PTC555666&quot;,
+            &quot;U68100GJ2019PTC555444&quot;,
+            &quot;U70100RJ2022PTC999000&quot;,
+            &quot;U72900KA2020PTC123456&quot;,
+            &quot;U74999DL2021PTC345678&quot;,
+            &quot;U86101DL2020PTC333222&quot;,
+            &quot;U93030KA2021PTC111222&quot;
+    );
+
+    @Override
+    public boolean checkIfCompanyRegistrationIsValid(String companyRegistrationNumber) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (companyRegistrationNumber == null) {</span>
+<span class="nc" id="L45">            return false;</span>
+        }
+<span class="nc" id="L47">        String normalized = companyRegistrationNumber.trim().toUpperCase();</span>
+<span class="nc" id="L48">        return VALID_COMPANY_REGISTRATION_NUMBERS.contains(normalized);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.store</a> &gt; <span class="el_source">AccountStore.java</span></div><h1>AccountStore.java</h1><pre class="source lang-java linenums">package com.gdb.store;
+
+import com.gdb.models.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+
+<span class="nc" id="L11">public class AccountStore {</span>
+    /*
+     * Data Generation Strategy:
+     * 1. Some active accounts, some inactive accounts
+     * 2. Some savings and current accounts
+     * 3. Different privileges.
+     * 
+     */
+<span class="fc" id="L19">    public static final List&lt;Account&gt; blackListedAccounts = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    public static final List&lt;Account&gt; accounts = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L22">    private static final AtomicInteger accountNumberCounter = new AtomicInteger(1001);</span>
+
+    public static String getNextAccountNumber() {
+<span class="fc" id="L25">        return String.valueOf(accountNumberCounter.getAndIncrement());</span>
+    }
+
+<span class="fc" id="L28">    public static final Set&lt;String&gt; REGISTERED_AADHAAR_NUMBERS = Set.of(</span>
+            &quot;600000000001&quot;,
+            &quot;600000000002&quot;,
+            &quot;600000000003&quot;,
+            &quot;600000000004&quot;,
+            &quot;600000000005&quot;,
+            &quot;600000000006&quot;,
+            &quot;600000000007&quot;,
+            &quot;600000000008&quot;,
+            &quot;600000000009&quot;,
+            &quot;600000000010&quot;);
+
+<span class="fc" id="L40">    public static final Set&lt;String&gt; REGISTERED_COMPANY_NUMBERS = Set.of(</span>
+            &quot;L01111TN2022PLC444333&quot;,
+            &quot;L10101UP2022PLC000999&quot;,
+            &quot;L15142UP2020PLC012345&quot;,
+            &quot;L17110WB2018PLC666777&quot;,
+            &quot;L18101MH2020PLC222333&quot;,
+            &quot;U45200HR2023PTC789012&quot;,
+            &quot;U46100DL2022PTC333444&quot;,
+            &quot;U51909GJ2022PTC567890&quot;,
+            &quot;U55101KA2023PTC111000&quot;,
+            &quot;U72900KA2020PTC123456&quot;);
+
+    private static void setAccountStatus(Account account, boolean active) {
+<span class="nc" id="L53">        account.setActive(active);</span>
+<span class="nc" id="L54">        account.setActivatedDate(LocalDateTime.now().minusDays(100));</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (!active) {</span>
+<span class="nc" id="L56">            account.setClosedDate(LocalDateTime.now());</span>
+        }
+<span class="nc" id="L58">    }</span>
+
+    private static Account createBlacklistedAccount(Account account) {
+<span class="nc" id="L61">        account.setActive(false);</span>
+<span class="nc" id="L62">        account.setActivatedDate(LocalDateTime.now().minusDays(365));</span>
+<span class="nc" id="L63">        account.setClosedDate(LocalDateTime.now().minusDays(300));</span>
+<span class="nc" id="L64">        return account;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

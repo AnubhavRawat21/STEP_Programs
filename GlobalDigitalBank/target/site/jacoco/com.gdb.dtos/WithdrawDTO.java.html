@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WithdrawDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.dtos</a> &gt; <span class="el_source">WithdrawDTO.java</span></div><h1>WithdrawDTO.java</h1><pre class="source lang-java linenums">package com.gdb.dtos;
+
+/**
+ * WithdrawDTO
+ */
+public class WithdrawDTO {
+    private String accountNumber;
+    private double withdrawAmount;
+    private String pinNumber;
+    private boolean minimumBalanceWarning;
+    private double newBalance;
+    private double originalBalance;
+
+<span class="fc" id="L14">    public WithdrawDTO(String accountNumber, double withdrawAmount, String pinNumber) {</span>
+<span class="fc" id="L15">        this.accountNumber = accountNumber;</span>
+<span class="fc" id="L16">        this.withdrawAmount = withdrawAmount;</span>
+<span class="fc" id="L17">        this.pinNumber = pinNumber;</span>
+<span class="fc" id="L18">        newBalance = 0;</span>
+<span class="fc" id="L19">        originalBalance = 0;</span>
+<span class="fc" id="L20">        minimumBalanceWarning = false;</span>
+<span class="fc" id="L21">    }</span>
+
+    public void setOriginalBalance(double originalBalance) {
+<span class="fc" id="L24">        this.originalBalance = originalBalance;</span>
+<span class="fc" id="L25">    }</span>
+
+    public double getOriginalBalance() {
+<span class="nc" id="L28">        return originalBalance;</span>
+    }
+
+    public void setNewBalance(double newBalance) {
+<span class="fc" id="L32">        this.newBalance = newBalance;</span>
+<span class="fc" id="L33">    }</span>
+
+    public double getNewBalance() {
+<span class="nc" id="L36">        return newBalance;</span>
+    }
+
+    public void setMinimumBalanceWarning(boolean shouldWarnUser) {
+<span class="fc" id="L40">        this.minimumBalanceWarning = shouldWarnUser;</span>
+<span class="fc" id="L41">    }</span>
+
+    public boolean getMinimumBalanceWarning() {
+<span class="fc" id="L44">        return minimumBalanceWarning;</span>
+    }
+
+    public String getAccountNumber() {
+<span class="fc" id="L48">        return accountNumber;</span>
+    }
+
+    public void setAccountNumber(String accountNumber) {
+<span class="nc" id="L52">        this.accountNumber = accountNumber;</span>
+<span class="nc" id="L53">    }</span>
+
+    public double getWithdrawAmount() {
+<span class="fc" id="L56">        return withdrawAmount;</span>
+    }
+
+    public void setWithdrawAmount(double withdrawAmount) {
+<span class="nc" id="L60">        this.withdrawAmount = withdrawAmount;</span>
+<span class="nc" id="L61">    }</span>
+
+    public String getPinNumber() {
+<span class="fc" id="L64">        return pinNumber;</span>
+    }
+
+    public void setPinNumber(String pinNumber) {
+<span class="nc" id="L68">        this.pinNumber = pinNumber;</span>
+<span class="nc" id="L69">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

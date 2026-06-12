@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrentAccount.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.models</a> &gt; <span class="el_source">CurrentAccount.java</span></div><h1>CurrentAccount.java</h1><pre class="source lang-java linenums">package com.gdb.models;
+
+public class CurrentAccount extends Account{
+    private String companyName;
+    private String websiteURL;
+    private String registrationNumber;
+
+    public CurrentAccount(String accountNumber, String name, double initialBalance, Privilege privilege, String pinNumber, String companyName, String websiteURL, String registrationNumber) {
+<span class="fc" id="L9">        super(accountNumber, name, initialBalance, privilege, pinNumber);</span>
+<span class="fc" id="L10">        this.companyName = companyName;</span>
+<span class="fc" id="L11">        this.websiteURL = websiteURL;</span>
+<span class="fc" id="L12">        this.registrationNumber = registrationNumber;</span>
+<span class="fc" id="L13">    }</span>
+
+    public String getCompanyName() {
+<span class="fc" id="L16">        return companyName;</span>
+    }
+
+    public void setCompanyName(String companyName) {
+<span class="nc" id="L20">        this.companyName = companyName;</span>
+<span class="nc" id="L21">    }</span>
+
+    public String getWebsiteURL() {
+<span class="nc" id="L24">        return websiteURL;</span>
+    }
+
+    public void setWebsiteURL(String websiteURL) {
+<span class="nc" id="L28">        this.websiteURL = websiteURL;</span>
+<span class="nc" id="L29">    }</span>
+
+    public String getRegistrationNumber() {
+<span class="fc" id="L32">        return registrationNumber;</span>
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+<span class="nc" id="L36">        this.registrationNumber = registrationNumber;</span>
+<span class="nc" id="L37">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

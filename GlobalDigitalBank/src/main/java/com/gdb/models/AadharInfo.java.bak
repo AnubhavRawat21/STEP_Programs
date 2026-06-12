@@ -1,0 +1,19 @@
+package com.gdb.models;
+
+import java.time.LocalDateTime;
+
+/**
+ * AadharInfo
+ * https://aadhar-service.vercel.app/docs
+ * This is currently not used anywhere
+ */
+public class AadharInfo {
+    private String aadharInfo;
+    private boolean isValid;
+    private String status;
+    private String message;
+    private LocalDateTime timestamp;
+    private String name;
+    private String mobileNumber;
+    private String address;
+}

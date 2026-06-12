@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.services</a> &gt; <span class="el_source">TransactionService.java</span></div><h1>TransactionService.java</h1><pre class="source lang-java linenums">package com.gdb.services;
+
+import java.time.LocalDate;
+
+import com.gdb.dtos.DepositDTO;
+import com.gdb.dtos.TransferDTO;
+import com.gdb.dtos.TransferModeDTO;
+import com.gdb.dtos.WithdrawDTO;
+import com.gdb.dtos.responses.DepositResponse;
+import com.gdb.dtos.responses.TransferResponse;
+import com.gdb.dtos.responses.WithdrawResponse;
+import com.gdb.exceptions.AccountAlreadyExistsException;
+import com.gdb.exceptions.AccountNotActiveException;
+import com.gdb.exceptions.AccountRecordNotFoundException;
+import com.gdb.exceptions.DailyTransferLimitExceededException;
+import com.gdb.exceptions.IncorrectPinNumberException;
+import com.gdb.exceptions.InsufficientFundsException;
+import com.gdb.models.Account;
+import com.gdb.models.FundTransfer;
+import com.gdb.models.Privilege;
+import com.gdb.models.TransferMode;
+import com.gdb.repositories.IAccountRepository;
+import com.gdb.repositories.ITransactionRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Service implementation for handling financial transactions.
+ * This class coordinates account lookups, security checks, limit validations,
+ * and persistent data updates for withdrawals and fund transfers.
+ */
+public class TransactionService implements ITransactionService {
+<span class="fc" id="L33">    private static final Logger logger = LogManager.getLogger(TransactionService.class);</span>
+    private IAccountRepository accountRepository;
+    private ITransactionRepository transactionRepository;
+    private TransactionLogService transactionLogService;
+
+    public TransactionService(IAccountRepository accountRepository, ITransactionRepository transactionRepository,
+<span class="fc" id="L39">            TransactionLogService transactionLogService) {</span>
+<span class="fc" id="L40">        this.accountRepository = accountRepository;</span>
+<span class="fc" id="L41">        this.transactionRepository = transactionRepository;</span>
+<span class="fc" id="L42">        this.transactionLogService = transactionLogService;</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * Handles cash withdrawal from an individual account.
+     * 
+     * @param dto Object containing the account number, withdrawal amount, and PIN.
+     * @return WithdrawResponse containing the final balance and any status
+     *         warnings.
+     * @throws AccountRecordNotFoundException if the account number is invalid.
+     * @throws AccountAlreadyExistsException  if an internal state conflict occurs.
+     * @throws IncorrectPinNumberException    if the provided PIN does not match the
+     *                                        record.
+     * @throws InsufficientFundsException     if the balance is too low for the
+     *                                        withdrawal.
+     * @throws AccountNotActiveException      if the account has been disabled or
+     *                                        closed.
+     */
+    @Override
+    public WithdrawResponse withdraw(WithdrawDTO dto) throws AccountRecordNotFoundException,
+            AccountAlreadyExistsException, IncorrectPinNumberException, InsufficientFundsException,
+            AccountNotActiveException {
+        // TODO: Student implementation
+        // 1. Fetch account from accountRepository and verify it exists and is active.
+        // 2. Check PIN matches the account's PIN.
+        // 3. Verify sufficient funds for withdrawal.
+        // 4. Check if balance drops below minimum balance tier and flag minimumBalanceWarning if needed.
+        // 5. Call transactionRepository.withdrawAmount to persist changes.
+        // 6. Log transaction using transactionLogService.logWithdraw.
+        // 7. Return the completed response.
+<span class="fc" id="L72">        dto.setNewBalance(0.0);</span>
+<span class="fc" id="L73">        dto.setOriginalBalance(0.0);</span>
+<span class="fc" id="L74">        dto.setMinimumBalanceWarning(false);</span>
+<span class="fc" id="L75">        return new WithdrawResponse(dto);</span>
+    }
+
+    /**
+     * Facilitates a fund transfer between two distinct accounts.
+     * 
+     * @param dto Object containing sender, receiver, amount, and authorization
+     *            details.
+     * @return TransferResponse indicating success and providing the updated sender
+     *         balance.
+     * @throws AccountRecordNotFoundException      if either account ID does not
+     *                                             exist in the store.
+     * @throws AccountNotActiveException           if either participating account
+     *                                             is currently closed.
+     * @throws IncorrectPinNumberException         if the sender's PIN verification
+     *                                             fails.
+     * @throws InsufficientFundsException          if the sender has inadequate
+     *                                             balance for the transfer.
+     * @throws DailyTransferLimitExceededException if the account tier limit for the
+     *                                             day is breached.
+     */
+    @Override
+    public TransferResponse transfer(TransferDTO dto)
+            throws AccountRecordNotFoundException, AccountNotActiveException, IncorrectPinNumberException,
+            InsufficientFundsException, DailyTransferLimitExceededException {
+        // TODO: Student implementation
+        // 1. Fetch both sender and receiver accounts and verify they exist and are active.
+        // 2. Validate the sender's PIN.
+        // 3. Ensure the sender has sufficient funds.
+        // 4. Verify that the transfer amount does not exceed the daily cap for the sender's privilege tier.
+        // 5. Check if the resulting balance drops below minimum requirements and set warning flag.
+        // 6. Call transactionRepository.transferAmount to execute changes.
+        // 7. Log the transfer using transactionLogService.logTransfer.
+        // 8. Return response.
+<span class="fc" id="L109">        dto.setNewBalance(0.0);</span>
+<span class="fc" id="L110">        dto.setMinimumBalanceWarning(false);</span>
+<span class="fc" id="L111">        return new TransferResponse(dto);</span>
+    }
+
+    //
+    // PRIVATE METHODS
+    //
+    private void checkTransferLimit(Account a, double transferAmount) throws DailyTransferLimitExceededException {
+<span class="fc" id="L118">        double currentTotal = transactionLogService.getDailyTransferTotal(a.getAccountNumber(), LocalDate.now());</span>
+<span class="fc" id="L119">        double limit = AccountPrivilegeManager.getDailyTransferLimit(a.getPrivilege());</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (currentTotal + transferAmount &gt; limit) {</span>
+<span class="fc" id="L121">            throw new DailyTransferLimitExceededException(&quot;Daily transfer limit exceeded&quot;);</span>
+        }
+<span class="fc" id="L123">    }</span>
+
+    private boolean shouldWarnMinimumBalance(double balance, double amount, Privilege privilege) {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        return (balance - amount &lt; AccountPrivilegeManager.getMinimumBalance(privilege));</span>
+    }
+
+    private Account getAccount(String accountNumber) throws AccountRecordNotFoundException {
+<span class="nc" id="L130">        return accountRepository.getAccountByAccountNumber(accountNumber);</span>
+    }
+
+    private WithdrawResponse constructResponse(WithdrawDTO dto, double newBalance) {
+<span class="nc" id="L134">        dto.setNewBalance(newBalance);</span>
+<span class="nc" id="L135">        return new WithdrawResponse(dto);</span>
+    }
+
+    private boolean checkAccountIsActive(Account account) throws AccountNotActiveException {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (account.isActive()) {</span>
+<span class="nc" id="L140">            return true;</span>
+        } else {
+<span class="nc" id="L142">            throw new AccountNotActiveException(&quot;This account is not Active&quot;);</span>
+        }
+    }
+
+    private boolean checkPinNumber(String validPinNumber, String dtoPinNumber) throws IncorrectPinNumberException {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (validPinNumber.equalsIgnoreCase(dtoPinNumber)) {</span>
+<span class="fc" id="L148">            return true;</span>
+        } else {
+<span class="fc" id="L150">            throw new IncorrectPinNumberException(&quot;Entered pin number is incorrect&quot;);</span>
+        }
+
+    }
+
+    private boolean checkSufficientFunds(double balance, double withdrawAmount) throws InsufficientFundsException {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (balance - withdrawAmount &gt;= 0) {</span>
+<span class="fc" id="L157">            return true;</span>
+        } else {
+<span class="fc" id="L159">            throw new InsufficientFundsException(&quot;Insufficient funds to perform this transaction&quot;);</span>
+        }
+
+    }
+
+    private double performWithdrawTransaction(String accountNumber, double requestedAmount) throws AccountRecordNotFoundException {
+<span class="nc" id="L165">        return transactionRepository.withdrawAmount(accountNumber, requestedAmount);</span>
+    }
+
+    private double performTransferTransaction(String fromAccountNumber, String toAccountNumber, double transferAmount)
+            throws AccountRecordNotFoundException {
+<span class="nc" id="L170">        return transactionRepository.transferAmount(fromAccountNumber, toAccountNumber, transferAmount);</span>
+    }
+
+    private double performDepositTransaction(String accountNumber, double depositAmount) throws AccountRecordNotFoundException {
+<span class="nc" id="L174">        return transactionRepository.depositAmount(accountNumber, depositAmount);</span>
+    }
+
+    private TransferMode mapToTransferMode(TransferModeDTO dtoMode) {
+<span class="nc" id="L178">        return TransferMode.valueOf(dtoMode.name());</span>
+    }
+
+    private DepositResponse constructDepositResponse(DepositDTO dto, double newBalance) {
+<span class="nc" id="L182">        dto.setNewBalance(newBalance);</span>
+<span class="nc" id="L183">        return new DepositResponse(dto);</span>
+    }
+
+    /**
+     * Handles cash deposit into an individual account.
+     * 
+     * @param dto Object containing the account number, deposit amount, and PIN.
+     * @return DepositResponse containing the final balance.
+     * @throws AccountRecordNotFoundException if the account number is invalid.
+     * @throws IncorrectPinNumberException    if the provided PIN does not match the
+     *                                        record.
+     * @throws AccountNotActiveException      if the account has been disabled or
+     *                                        closed.
+     */
+    @Override
+    public DepositResponse deposit(DepositDTO dto) throws AccountRecordNotFoundException,
+            IncorrectPinNumberException, AccountNotActiveException {
+        // TODO: Student implementation
+        // 1. Fetch account from accountRepository and verify it exists and is active.
+        // 2. Validate user authorization by checking the provided PIN.
+        // 3. Call transactionRepository.depositAmount to update database.
+        // 4. Log the deposit using transactionLogService.logDeposit.
+        // 5. Return response.
+<span class="fc" id="L206">        dto.setNewBalance(0.0);</span>
+<span class="fc" id="L207">        dto.setOriginalBalance(0.0);</span>
+<span class="fc" id="L208">        return new DepositResponse(dto);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

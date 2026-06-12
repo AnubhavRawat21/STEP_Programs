@@ -1,0 +1,45 @@
+[2026-06-12 05:05:29] [INFO ] [AccountController] - Controller: Received request to close account 10008
+[2026-06-12 05:05:29] [INFO ] [AccountController] - A/c is closed
+[2026-06-12 05:05:50] [INFO ] [AccountController] - Controller: Received request to close account 10923
+[2026-06-12 05:05:50] [INFO ] [AccountController] - A/c is closed
+[2026-06-12 05:06:06] [INFO ] [AccountController] - Controller: Received request to close account 99999
+[2026-06-12 05:06:06] [INFO ] [AccountController] - A/c is closed
+[2026-06-12 06:46:09] [ERROR] [TransactionController] - Account record not found
+[2026-06-12 06:46:36] [ERROR] [TransactionController] - Account record not found
+[2026-06-12 06:47:19] [ERROR] [TransactionController] - Account record not found
+[2026-06-12 07:00:06] [ERROR] [TransactionController] - Account record not found
+com.gdb.exceptions.AccountRecordNotFoundException: Account record not found
+	at com.gdb.repositories.AccountRepository.lambda$getAccountByAccountNumber$1(AccountRepository.java:22) ~[classes/:?]
+	at java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
+	at com.gdb.repositories.AccountRepository.getAccountByAccountNumber(AccountRepository.java:22) ~[classes/:?]
+	at com.gdb.services.TransactionService.getAccount(TransactionService.java:153) ~[classes/:?]
+	at com.gdb.services.TransactionService.withdraw(TransactionService.java:72) ~[classes/:?]
+	at com.gdb.controllers.TransactionController.withdraw(TransactionController.java:46) [classes/:?]
+	at com.gdb.ui.TransactionUI.withdraw(TransactionUI.java:50) [classes/:?]
+	at com.gdb.ui.HomeUI.showUI(HomeUI.java:34) [classes/:?]
+	at Main.main(Main.java:65) [classes/:?]
+[2026-06-12 07:00:47] [ERROR] [TransactionController] - Account record not found
+[2026-06-12 07:04:17] [ERROR] [TransactionController] - Account record not found
+[2026-06-12 07:04:37] [ERROR] [TransactionController] - Account record not found
+com.gdb.exceptions.AccountRecordNotFoundException: Account record not found
+	at com.gdb.repositories.AccountRepository.lambda$getAccountByAccountNumber$1(AccountRepository.java:22) ~[classes/:?]
+	at java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
+	at com.gdb.repositories.AccountRepository.getAccountByAccountNumber(AccountRepository.java:22) ~[classes/:?]
+	at com.gdb.services.TransactionService.getAccount(TransactionService.java:153) ~[classes/:?]
+	at com.gdb.services.TransactionService.withdraw(TransactionService.java:72) ~[classes/:?]
+	at com.gdb.controllers.TransactionController.withdraw(TransactionController.java:46) [classes/:?]
+	at com.gdb.ui.TransactionUI.withdraw(TransactionUI.java:50) [classes/:?]
+	at com.gdb.ui.HomeUI.showUI(HomeUI.java:34) [classes/:?]
+	at Main.main(Main.java:65) [classes/:?]
+[2026-06-12 07:06:20] [ERROR] [TransactionController] - Account record not found
+com.gdb.exceptions.AccountRecordNotFoundException: Account record not found
+	at com.gdb.repositories.AccountRepository.lambda$getAccountByAccountNumber$1(AccountRepository.java:22) ~[classes/:?]
+	at java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
+	at com.gdb.repositories.AccountRepository.getAccountByAccountNumber(AccountRepository.java:22) ~[classes/:?]
+	at com.gdb.services.TransactionService.getAccount(TransactionService.java:153) ~[classes/:?]
+	at com.gdb.services.TransactionService.withdraw(TransactionService.java:72) ~[classes/:?]
+	at com.gdb.controllers.TransactionController.withdraw(TransactionController.java:46) [classes/:?]
+	at com.gdb.ui.TransactionUI.withdraw(TransactionUI.java:50) [classes/:?]
+	at com.gdb.ui.HomeUI.showUI(HomeUI.java:34) [classes/:?]
+	at Main.main(Main.java:65) [classes/:?]
+[2026-06-12 07:06:50] [ERROR] [TransactionController] - Account record not found

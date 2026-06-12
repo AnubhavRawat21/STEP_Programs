@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataSeeder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.utils</a> &gt; <span class="el_source">DataSeeder.java</span></div><h1>DataSeeder.java</h1><pre class="source lang-java linenums">package com.gdb.utils;
+
+import com.gdb.models.*;
+import com.gdb.store.AccountStore;
+import com.gdb.store.TransactionLogStore;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+
+/**
+ * DataSeeder
+ * Utility to populate the in-memory store with large amounts of data for stress
+ * testing.
+ */
+<span class="nc" id="L16">public class DataSeeder {</span>
+
+<span class="fc" id="L18">    private static final Random random = new Random();</span>
+
+    public static void seed(int accountCount) {
+<span class="fc" id="L21">        System.out.println(&quot;Seeding &quot; + accountCount + &quot; accounts and transactions...&quot;);</span>
+
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        for (int i = 1; i &lt;= accountCount; i++) {</span>
+<span class="fc" id="L24">            Privilege privilege = Privilege.values()[random.nextInt(Privilege.values().length)];</span>
+<span class="fc" id="L25">            String pin = String.format(&quot;%04d&quot;, random.nextInt(10000));</span>
+<span class="fc" id="L26">            double balance = 1000 + (random.nextDouble() * 500000);</span>
+<span class="fc" id="L27">            String accNum = AccountStore.getNextAccountNumber();</span>
+
+            Account account;
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (i % 2 == 0) {</span>
+                // Current Account
+<span class="fc" id="L32">                account = new CurrentAccount(</span>
+                        accNum,
+                        &quot;Company &quot; + i,
+                        balance,
+                        privilege,
+                        pin,
+                        &quot;Enterprise &quot; + i,
+                        &quot;https://comp&quot; + i + &quot;.com&quot;,
+                        &quot;REG&quot; + (100000 + i));
+            } else {
+                // Savings Account
+<span class="fc" id="L43">                Gender gender = Gender.values()[random.nextInt(Gender.values().length)];</span>
+<span class="fc" id="L44">                account = new SavingsAccount(</span>
+                        accNum,
+                        &quot;User &quot; + i,
+                        balance,
+                        privilege,
+                        pin,
+<span class="fc" id="L50">                        LocalDate.now().minusYears((long) 18 + random.nextInt(50)),</span>
+                        gender,
+<span class="fc" id="L52">                        &quot;9&quot; + String.format(&quot;%09d&quot;, i),</span>
+<span class="fc" id="L53">                        &quot;5&quot; + String.format(&quot;%011d&quot;, i));</span>
+            }
+
+            // Set some accounts to inactive (5% chance)
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            boolean isActive = random.nextDouble() &gt; 0.05;</span>
+<span class="fc" id="L58">            account.setActive(isActive);</span>
+<span class="fc" id="L59">            account.setActivatedDate(LocalDateTime.now().minusMonths(6));</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (!isActive) {</span>
+<span class="fc" id="L61">                account.setClosedDate(LocalDateTime.now().minusDays(10));</span>
+            }
+
+<span class="fc" id="L64">            AccountStore.accounts.add(account);</span>
+
+            // Generate random transactions for some accounts (first 1000)
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (i &lt;= 1000) {</span>
+<span class="fc" id="L68">                seedTransactions(account);</span>
+            }
+        }
+
+<span class="fc" id="L72">        System.out.println(&quot;Seeding completed successfully.&quot;);</span>
+<span class="fc" id="L73">    }</span>
+
+    private static void seedTransactions(Account account) {
+<span class="fc" id="L76">        String accNum = account.getAccountNumber();</span>
+<span class="fc" id="L77">        LocalDate today = LocalDate.now();</span>
+
+        // 1-5 transactions for today
+<span class="fc" id="L80">        int txCount = 1 + random.nextInt(5);</span>
+
+<span class="fc" id="L82">        Map&lt;LocalDate, Map&lt;TransactionType, List&lt;Transaction&gt;&gt;&gt; dateMap = TransactionLogStore.logs</span>
+<span class="fc" id="L83">                .computeIfAbsent(accNum, k -&gt; new HashMap&lt;&gt;());</span>
+<span class="fc" id="L84">        Map&lt;TransactionType, List&lt;Transaction&gt;&gt; typeMap = dateMap.computeIfAbsent(today, k -&gt; new HashMap&lt;&gt;());</span>
+<span class="fc" id="L85">        List&lt;Transaction&gt; txList = typeMap.computeIfAbsent(TransactionType.TRANSFER_OUT, k -&gt; new ArrayList&lt;&gt;());</span>
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (int j = 0; j &lt; txCount; j++) {</span>
+            // Random amount between 100 and 15000
+<span class="fc" id="L89">            double amount = 100 + (random.nextDouble() * 15000);</span>
+
+            // Create a dummy transaction
+<span class="fc" id="L92">            Transaction tx = new Transaction(</span>
+                    TransactionType.TRANSFER_OUT,
+                    amount,
+<span class="fc" id="L95">                    account.getBalance(), // dummy balanceAfter</span>
+<span class="fc" id="L96">                    today.atStartOfDay().plusHours(random.nextInt(24)),</span>
+                    &quot;Initial Seed Transaction&quot;);
+<span class="fc" id="L98">            txList.add(tx);</span>
+        }
+<span class="fc" id="L100">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: com.gdb.tests.repositories.TransactionRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.089 s <<< FAILURE! -- in com.gdb.tests.repositories.TransactionRepositoryTest
+com.gdb.tests.repositories.TransactionRepositoryTest.TestDepositAmount_AccountNotFound -- Time elapsed: 0.010 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountRecordNotFoundException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.repositories.TransactionRepositoryTest.TestDepositAmount_AccountNotFound(TransactionRepositoryTest.java:83)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.repositories.TransactionRepositoryTest.TestDepositAmount_Success -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <6000.0> but was: <0.0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:70)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:65)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:889)
+	at com.gdb.tests.repositories.TransactionRepositoryTest.TestDepositAmount_Success(TransactionRepositoryTest.java:77)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

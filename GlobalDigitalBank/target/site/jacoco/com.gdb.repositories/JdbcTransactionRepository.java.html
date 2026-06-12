@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JdbcTransactionRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.repositories</a> &gt; <span class="el_source">JdbcTransactionRepository.java</span></div><h1>JdbcTransactionRepository.java</h1><pre class="source lang-java linenums">package com.gdb.repositories;
+
+import com.gdb.exceptions.AccountRecordNotFoundException;
+import com.gdb.exceptions.DatabaseException;
+import com.gdb.models.Account;
+import com.gdb.models.Transaction;
+import com.gdb.models.TransactionType;
+import com.gdb.models.Privilege;
+import com.gdb.models.Gender;
+
+import com.gdb.models.CurrentAccount;
+import com.gdb.models.SavingsAccount;
+
+import javax.sql.DataSource;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public class JdbcTransactionRepository implements ITransactionRepository {
+
+    private final DataSource dataSource;
+
+<span class="nc" id="L23">    public JdbcTransactionRepository(DataSource dataSource) {</span>
+<span class="nc" id="L24">        this.dataSource = dataSource;</span>
+<span class="nc" id="L25">    }</span>
+
+    @Override
+    public double withdrawAmount(String accountNumber, double withdrawAmount) throws AccountRecordNotFoundException {
+        // TODO: Student implementation
+        // 1. Establish database connection from dataSource.
+        // 2. Start database transaction by setting autoCommit to false.
+        // 3. Select current balance and lock the account row using FOR UPDATE (to prevent race conditions).
+        // 4. Validate sufficient balance, then update the balance.
+        // 5. Insert transaction log into the `transactions` table with transaction_type = 'WITHDRAW'.
+        // 6. Commit the database transaction and return the new balance.
+        // 7. Ensure rollback is executed in case of any SQL exception.
+<span class="nc" id="L37">        return 0.0;</span>
+    }
+
+    @Override
+    public double transferAmount(String fromAccountNumber, String toAccountNumber, double transferAmount) 
+            throws AccountRecordNotFoundException {
+        // TODO: Student implementation
+        // 1. Establish database connection from dataSource.
+        // 2. Start database transaction by setting autoCommit to false.
+        // 3. Select and lock ('FOR UPDATE') both the sender and receiver account records.
+        // 4. Validate sufficient balance in sender account.
+        // 5. Update balances for both accounts.
+        // 6. Insert transaction log records into the `transactions` table for both accounts (TRANSFER_OUT and TRANSFER_IN).
+        // 7. Commit the transaction and return the sender's new balance.
+        // 8. Handle rollbacks in case of exceptions.
+<span class="nc" id="L52">        return 0.0;</span>
+    }
+
+    @Override
+    public double depositAmount(String accountNumber, double depositAmount) throws AccountRecordNotFoundException {
+        // TODO: Student implementation
+        // 1. Establish database connection from dataSource.
+        // 2. Start database transaction (autoCommit = false).
+        // 3. Select and lock the account record using FOR UPDATE.
+        // 4. Update the account balance with the deposit amount.
+        // 5. Insert transaction log record into `transactions` table with transaction_type = 'DEPOSIT'.
+        // 6. Commit the transaction and return the new balance.
+        // 7. Handle rollbacks in case of errors.
+<span class="nc" id="L65">        return 0.0;</span>
+    }
+
+    private double calculateNewBalance(double balance, double amount, boolean isDebit) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (isDebit) {</span>
+<span class="nc" id="L70">            return balance - amount;</span>
+        } else {
+<span class="nc" id="L72">            return balance + amount;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

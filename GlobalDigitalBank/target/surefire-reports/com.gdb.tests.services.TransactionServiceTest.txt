@@ -1,0 +1,262 @@
+-------------------------------------------------------------------------------
+Test set: com.gdb.tests.services.TransactionServiceTest
+-------------------------------------------------------------------------------
+Tests run: 30, Failures: 18, Errors: 3, Skipped: 0, Time elapsed: 1.149 s <<< FAILURE! -- in com.gdb.tests.services.TransactionServiceTest
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_FromAccountNotFound -- Time elapsed: 0.519 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountRecordNotFoundException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_FromAccountNotFound(TransactionServiceTest.java:87)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_AccountNotFound -- Time elapsed: 0.016 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountRecordNotFoundException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_AccountNotFound(TransactionServiceTest.java:193)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_AccountNotActive -- Time elapsed: 0.018 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountNotActiveException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_AccountNotActive(TransactionServiceTest.java:203)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_ZeroAmount -- Time elapsed: 0.015 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_ZeroAmount(TransactionServiceTest.java:239)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.lambda$afterEach$2(MockitoExtension.java:200)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:198)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_ZeroAmount -- Time elapsed: 0.019 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at com.gdb.tests.services.TransactionServiceTest.TestTransfer_ZeroAmount(TransactionServiceTest.java:163)
+  2. -> at com.gdb.tests.services.TransactionServiceTest.TestTransfer_ZeroAmount(TransactionServiceTest.java:164)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.lambda$afterEach$2(MockitoExtension.java:200)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:198)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_FromAccountNotActive -- Time elapsed: 0.025 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountNotActiveException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_FromAccountNotActive(TransactionServiceTest.java:111)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_Success -- Time elapsed: 0.035 s <<< FAILURE!
+Wanted but not invoked:
+transactionLogService.logTransfer(
+    <any com.gdb.models.FundTransfer>,
+    <any double>,
+    <any double>
+);
+-> at com.gdb.services.TransactionLogService.logTransfer(TransactionLogService.java:19)
+Actually, there were zero interactions with this mock.
+
+	at com.gdb.services.TransactionLogService.logTransfer(TransactionLogService.java:19)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_Success(TransactionServiceTest.java:77)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_InsufficientFunds -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.InsufficientFundsException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_InsufficientFunds(TransactionServiceTest.java:221)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_IncorrectPin -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.IncorrectPinNumberException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_IncorrectPin(TransactionServiceTest.java:132)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestDeposit_AccountNotActive -- Time elapsed: 0.017 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountNotActiveException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestDeposit_AccountNotActive(TransactionServiceTest.java:394)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestDeposit_Success -- Time elapsed: 0.018 s <<< FAILURE!
+Wanted but not invoked:
+transactionLogService.logDeposit(
+    "1001",
+    5000.0d,
+    <any double>
+);
+-> at com.gdb.services.TransactionLogService.logDeposit(TransactionLogService.java:48)
+Actually, there were zero interactions with this mock.
+
+	at com.gdb.services.TransactionLogService.logDeposit(TransactionLogService.java:48)
+	at com.gdb.tests.services.TransactionServiceTest.TestDeposit_Success(TransactionServiceTest.java:374)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_Success -- Time elapsed: 0.014 s <<< FAILURE!
+Wanted but not invoked:
+transactionLogService.logWithdraw(
+    "1001",
+    5000.0d,
+    <any double>
+);
+-> at com.gdb.services.TransactionLogService.logWithdraw(TransactionLogService.java:42)
+Actually, there were zero interactions with this mock.
+
+	at com.gdb.services.TransactionLogService.logWithdraw(TransactionLogService.java:42)
+	at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_Success(TransactionServiceTest.java:183)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_LowBalanceWarning -- Time elapsed: 0.019 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:183)
+	at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_LowBalanceWarning(TransactionServiceTest.java:232)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_ExactBalance -- Time elapsed: 0.014 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_ExactBalance(TransactionServiceTest.java:251)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.lambda$afterEach$2(MockitoExtension.java:200)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:198)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestDeposit_IncorrectPin -- Time elapsed: 0.017 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.IncorrectPinNumberException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestDeposit_IncorrectPin(TransactionServiceTest.java:403)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_ToAccountNotActive -- Time elapsed: 0.020 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountNotActiveException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_ToAccountNotActive(TransactionServiceTest.java:122)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_InsufficientFunds -- Time elapsed: 0.017 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.InsufficientFundsException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_InsufficientFunds(TransactionServiceTest.java:142)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_DailyLimitExceeded -- Time elapsed: 0.018 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.DailyTransferLimitExceededException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_DailyLimitExceeded(TransactionServiceTest.java:153)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestWithdraw_IncorrectPin -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.IncorrectPinNumberException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestWithdraw_IncorrectPin(TransactionServiceTest.java:212)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestDeposit_AccountNotFound -- Time elapsed: 0.015 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountRecordNotFoundException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestDeposit_AccountNotFound(TransactionServiceTest.java:384)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.gdb.tests.services.TransactionServiceTest.TestTransfer_ToAccountNotFound -- Time elapsed: 0.012 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.gdb.exceptions.AccountRecordNotFoundException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.gdb.tests.services.TransactionServiceTest.TestTransfer_ToAccountNotFound(TransactionServiceTest.java:98)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

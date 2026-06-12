@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.repositories</a> &gt; <span class="el_source">AccountRepository.java</span></div><h1>AccountRepository.java</h1><pre class="source lang-java linenums">package com.gdb.repositories;
+
+import com.gdb.exceptions.AccountRecordNotFoundException;
+import com.gdb.models.Account;
+import com.gdb.models.CurrentAccount;
+import com.gdb.models.SavingsAccount;
+import com.gdb.store.AccountStore;
+import com.gdb.utils.AadharUtils;
+
+/**
+ * AccountRepository
+ * Repository Class: It connects to the database
+ * (Otherwise called DAO: Data Access Object)
+ */
+<span class="fc" id="L15">public class AccountRepository implements IAccountRepository {</span>
+
+    @Override
+    public Account getAccountByAccountNumber(String accountNumber) throws AccountRecordNotFoundException {
+<span class="nc" id="L19">        return AccountStore.accounts.stream()</span>
+<span class="nc" id="L20">                .filter(account -&gt; account.getAccountNumber().equalsIgnoreCase(accountNumber))</span>
+<span class="nc" id="L21">                .findFirst()</span>
+<span class="nc" id="L22">                .orElseThrow(() -&gt; new AccountRecordNotFoundException(&quot;Account record not found&quot;));</span>
+    }
+
+    @Override
+    public boolean checkIfSavingsAccountExists(String aadharNumber) {
+<span class="fc" id="L27">        String normalized = AadharUtils.normalizeAadhar(aadharNumber);</span>
+<span class="fc" id="L28">        return AccountStore.accounts.stream()</span>
+<span class="fc" id="L29">                .filter(this::isSavingsAccount)</span>
+<span class="fc" id="L30">                .map(this::asSavingsAccount)</span>
+<span class="pc bpc" id="L31" title="1 of 4 branches missed.">                .anyMatch(sa -&gt; sa.getAadharNumber().equals(normalized) &amp;&amp; sa.isActive());</span>
+    }
+
+    @Override
+    public boolean checkIfCurrentAccountExists(String registrationNumber) {
+<span class="fc" id="L36">        return AccountStore.accounts.stream()</span>
+<span class="fc" id="L37">                .filter(this::isCurrentAccount)</span>
+<span class="fc" id="L38">                .map(this::asCurrentAccount)</span>
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">                .anyMatch(ca -&gt; ca.getRegistrationNumber().equals(registrationNumber) &amp;&amp; ca.isActive());</span>
+    }
+
+    @Override
+    public boolean checkIfAadharIsBlacklisted(String aadharNumber) {
+<span class="fc" id="L44">        String normalized = AadharUtils.normalizeAadhar(aadharNumber);</span>
+
+<span class="fc" id="L46">        return AccountStore.blackListedAccounts.stream()</span>
+<span class="fc" id="L47">                .filter(this::isSavingsAccount)</span>
+<span class="fc" id="L48">                .map(this::asSavingsAccount)</span>
+<span class="fc" id="L49">                .anyMatch(sa -&gt; sa.getAadharNumber().equals(normalized));</span>
+    }
+
+    @Override
+    public boolean checkIfCompanyIsBlacklisted(String registrationNumber) {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (registrationNumber == null)</span>
+<span class="fc" id="L55">            return false;</span>
+
+<span class="nc" id="L57">        return AccountStore.blackListedAccounts.stream()</span>
+<span class="nc" id="L58">                .filter(this::isCurrentAccount)</span>
+<span class="nc" id="L59">                .map(this::asCurrentAccount)</span>
+<span class="nc" id="L60">                .anyMatch(ca -&gt; ca.getRegistrationNumber().equals(registrationNumber));</span>
+    }
+
+    private boolean isSavingsAccount(Account account) {
+<span class="fc" id="L64">        return account instanceof SavingsAccount;</span>
+    }
+
+    private SavingsAccount asSavingsAccount(Account account) {
+<span class="fc" id="L68">        return (SavingsAccount) account;</span>
+    }
+
+    private boolean isCurrentAccount(Account account) {
+<span class="fc" id="L72">        return account instanceof CurrentAccount;</span>
+    }
+
+    private CurrentAccount asCurrentAccount(Account account) {
+<span class="fc" id="L76">        return (CurrentAccount) account;</span>
+    }
+
+    @Override
+    public String generateAccountNumber() {
+<span class="nc" id="L81">        return AccountStore.getNextAccountNumber();</span>
+    }
+
+    @Override
+    public boolean storeAccountInformation(Account account) {
+<span class="nc" id="L86">        return AccountStore.accounts.add(account);</span>
+    }
+
+    @Override
+    public void closeAccount(String accountNumber, java.time.LocalDateTime closedDate) throws AccountRecordNotFoundException {
+<span class="nc" id="L91">        Account account = getAccountByAccountNumber(accountNumber);</span>
+<span class="nc" id="L92">        account.setActive(false);</span>
+<span class="nc" id="L93">        account.setClosedDate(closedDate);</span>
+<span class="nc" id="L94">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

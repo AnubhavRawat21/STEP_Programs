@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.controllers</a> &gt; <span class="el_source">TransactionController.java</span></div><h1>TransactionController.java</h1><pre class="source lang-java linenums">package com.gdb.controllers;
+
+import com.gdb.dtos.DepositDTO;
+import com.gdb.dtos.TransferDTO;
+import com.gdb.dtos.WithdrawDTO;
+import com.gdb.dtos.responses.DepositResponse;
+import com.gdb.dtos.responses.TransferResponse;
+import com.gdb.dtos.responses.WithdrawResponse;
+import com.gdb.exceptions.*;
+import com.gdb.services.ITransactionService;
+import com.gdb.utils.TransactionValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Controller responsible for processing financial transactions.
+ * Manages the boundary between user input and the core transaction services,
+ * ensuring that data is correctly formatted and valid before processing.
+ */
+public class TransactionController implements ITransactionController {
+<span class="fc" id="L21">    private static final Logger logger = LogManager.getLogger(TransactionController.class);</span>
+    private ITransactionService transactionService;
+    private TransactionValidator validator;
+
+<span class="fc" id="L25">    public TransactionController(ITransactionService transactionService, TransactionValidator validator) {</span>
+<span class="fc" id="L26">        this.transactionService = transactionService;</span>
+<span class="fc" id="L27">        this.validator = validator;</span>
+<span class="fc" id="L28">    }</span>
+
+    @Override
+    public WithdrawResponse withdraw(WithdrawDTO withdrawDTO) {
+        // TODO: Student implementation
+        // 1. Validate the input withdrawDTO using validateWithdrawRequest.
+        // 2. Delegate the call to transactionService.withdraw.
+        // 3. Handle specific exceptions (e.g. InvalidInputException, AccountRecordNotFoundException, IncorrectPinNumberException, InsufficientFundsException, AccountNotActiveException) and map them to HTTP status 400 with a clean message.
+        // 4. Map unexpected runtime errors to HTTP status 500.
+        // 5. Return response.
+<span class="fc" id="L38">        WithdrawResponse response = new WithdrawResponse(withdrawDTO);</span>
+<span class="fc" id="L39">        response.setResponseStatus(200, &quot;Success&quot;);</span>
+<span class="fc" id="L40">        return response;</span>
+    }
+
+    /**
+     * Initiates a fund transfer transaction request.
+     * 
+     * @param transferDTO Details of the source, target, and amount.
+     * @return TransferResponse containing the HTTP result and transaction feedback.
+     */
+    @Override
+    public TransferResponse transfer(TransferDTO transferDTO) {
+        // TODO: Student implementation
+        // 1. Validate the input transferDTO using validateTransferRequest.
+        // 2. Delegate the call to transactionService.transfer.
+        // 3. Handle specific exceptions (e.g. InvalidInputException, AccountRecordNotFoundException, AccountNotActiveException, IncorrectPinNumberException, InsufficientFundsException, DailyTransferLimitExceededException) and map to HTTP status 400.
+        // 4. Map unexpected runtime errors to HTTP status 500.
+        // 5. Return response.
+<span class="fc" id="L57">        TransferResponse response = new TransferResponse(transferDTO);</span>
+<span class="fc" id="L58">        response.setResponseStatus(200, &quot;Success&quot;);</span>
+<span class="fc" id="L59">        return response;</span>
+    }
+
+    //
+    // Private helpers
+    //
+    private void validateWithdrawRequest(WithdrawDTO dto) throws InvalidInputException {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (dto == null) {</span>
+<span class="nc" id="L67">            throw new InvalidInputException(&quot;DTO cannot be null&quot;);</span>
+        }
+<span class="nc" id="L69">        validator.validateAccountNumber(dto.getAccountNumber());</span>
+<span class="nc" id="L70">        validator.validatePin(dto.getPinNumber());</span>
+<span class="nc" id="L71">        validator.validateWithdrawAmount(dto.getWithdrawAmount());</span>
+<span class="nc" id="L72">    }</span>
+
+    private void validateTransferRequest(TransferDTO dto) throws InvalidInputException {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (dto == null) {</span>
+<span class="nc" id="L76">            throw new InvalidInputException(&quot;DTO cannot be null&quot;);</span>
+        }
+
+<span class="nc" id="L79">        validator.validateAccountNumber(dto.getFromAccountNumber());</span>
+<span class="nc" id="L80">        validator.validateAccountNumber(dto.getToAccountNumber());</span>
+<span class="nc" id="L81">        validator.validateTransferAmount(dto.getTransferAmount());</span>
+<span class="nc" id="L82">        validator.validatePin(dto.getPinNumber());</span>
+
+<span class="nc" id="L84">    }</span>
+
+    private void validateDepositRequest(DepositDTO dto) throws InvalidInputException {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (dto == null) {</span>
+<span class="nc" id="L88">            throw new InvalidInputException(&quot;DTO cannot be null&quot;);</span>
+        }
+<span class="nc" id="L90">        validator.validateAccountNumber(dto.getAccountNumber());</span>
+<span class="nc" id="L91">        validator.validatePin(dto.getPinNumber());</span>
+<span class="nc" id="L92">        validator.validateDepositAmount(dto.getDepositAmount());</span>
+<span class="nc" id="L93">    }</span>
+
+    @Override
+    public DepositResponse deposit(DepositDTO depositDTO) {
+        // TODO: Student implementation
+        // 1. Validate the input depositDTO using validateDepositRequest.
+        // 2. Delegate the call to transactionService.deposit.
+        // 3. Handle specific exceptions (e.g. InvalidInputException, AccountRecordNotFoundException, IncorrectPinNumberException, AccountNotActiveException) and map them to HTTP status 400.
+        // 4. Map unexpected runtime errors to HTTP status 500.
+        // 5. Return response.
+<span class="fc" id="L103">        DepositResponse response = new DepositResponse(depositDTO);</span>
+<span class="fc" id="L104">        response.setResponseStatus(200, &quot;Success&quot;);</span>
+<span class="fc" id="L105">        return response;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

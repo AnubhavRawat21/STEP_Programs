@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f450004e-a2f6-4013-8cea-cd529a219e3c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/junit_jupiter.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BillingManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Dosage/src/main/java/org/example/Calculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Dosage/src/test/java/CalculatorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DosageCalculator/DosageCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DosageCalculator/DosageCalculatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Calculator/src/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Calculator/src/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Company.class" beforeDir="false" afterPath="$PROJECT_DIR$/Company.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Membership.class" beforeDir="false" afterPath="$PROJECT_DIR$/Membership.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Membership.java" beforeDir="false" afterPath="$PROJECT_DIR$/Membership.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MembershipFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/MembershipFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MembershipFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/MembershipFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OrderItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/OrderItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrderItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisteredCustomer.class" beforeDir="false" afterPath="$PROJECT_DIR$/RegisteredCustomer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisteredCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisteredCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/TestMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../STEP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../STEP.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="27" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0" />
+      <entry key="S60" value="1.0" />
+      <entry key="M2" value="1.0000000015376034" />
+      <entry key="M5" value="1.0006774203619955" />
+      <entry key="M10" value="1.071519173607918" />
+      <entry key="M15" value="1.3540646698900478" />
+      <entry key="M30" value="2.8541775391461277" />
+      <entry key="H1" value="5.572684766058141" />
+      <entry key="H2" value="8.522170881043435" />
+      <entry key="H4" value="10.818675070076752" />
+      <entry key="D1" value="13.392688105251816" />
+      <entry key="W1" value="13.911103004700196" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="2.6854151634055873E-265" />
+      <entry key="S10" value="5.182099153244356E-133" />
+      <entry key="S30" value="8.032213421809135E-45" />
+      <entry key="S60" value="8.962261668691191E-23" />
+      <entry key="M2" value="9.466922239403462E-12" />
+      <entry key="M5" value="3.8947853157679376E-5" />
+      <entry key="M10" value="0.006240821513044523" />
+      <entry key="M15" value="0.03389699307587433" />
+      <entry key="M30" value="0.1841113605290948" />
+      <entry key="H1" value="0.4290819974423243" />
+      <entry key="H2" value="0.655043508052957" />
+      <entry key="H4" value="0.8093475817304684" />
+      <entry key="D1" value="0.965359731433421" />
+      <entry key="W1" value="0.9949763085281589" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.6597539553864471" />
+      <entry key="MS500" value="0.9201876506248751" />
+      <entry key="S2" value="0.9794202975869268" />
+      <entry key="S5" value="0.9917167307382933" />
+      <entry key="S10" value="0.9958497530944581" />
+      <entry key="S30" value="0.9986146661010289" />
+      <entry key="S60" value="0.9993070929904525" />
+      <entry key="M2" value="0.9996534879747908" />
+      <entry key="M5" value="1.0005732760296733" />
+      <entry key="M10" value="1.0774791959217522" />
+      <entry key="M15" value="1.3872415432676413" />
+      <entry key="M30" value="3.0365986331472086" />
+      <entry key="H1" value="5.999841061533639" />
+      <entry key="H2" value="9.175729824126162" />
+      <entry key="H4" value="11.627093310620053" />
+      <entry key="D1" value="14.35786002460239" />
+      <entry key="W1" value="14.906051566014918" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3EyremreuN8EeibdMpe59Ee4RNg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TestMain.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/STEP/JAVA/CompanyOrder&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f450004e-a2f6-4013-8cea-cd529a219e3c" name="Changes" comment="" />
+      <created>1781161747564</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781161747564</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

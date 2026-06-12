@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountServiceCurrentImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.services</a> &gt; <span class="el_source">AccountServiceCurrentImpl.java</span></div><h1>AccountServiceCurrentImpl.java</h1><pre class="source lang-java linenums">package com.gdb.services;
+
+import java.time.LocalDateTime;
+
+import com.gdb.apis.integrations.ICompanyApiService;
+import com.gdb.dtos.OpenAccountDTO;
+import com.gdb.dtos.OpenCurrentAccountDTO;
+import com.gdb.dtos.responses.OpenAccountResponse;
+import com.gdb.exceptions.AccountAlreadyExistsException;
+import com.gdb.exceptions.AccountCreationException;
+import com.gdb.exceptions.BlacklistedAadharOrCompanyException;
+import com.gdb.models.CurrentAccount;
+import com.gdb.models.Privilege;
+import com.gdb.repositories.IAccountRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Implementation of account opening logic for Corporate Current Accounts.
+ * This service handles verification of company registration and corporate
+ * blacklist checks before issuing a business account number.
+ */
+public class AccountServiceCurrentImpl implements IAccountServiceImpl {
+<span class="fc" id="L24">    private static final Logger logger = LogManager.getLogger(AccountServiceCurrentImpl.class);</span>
+    private IAccountRepository accountRepository;
+    private ICompanyApiService companyApiService;
+
+<span class="fc" id="L28">    public AccountServiceCurrentImpl(IAccountRepository accountRepository, ICompanyApiService companyApiService) {</span>
+<span class="fc" id="L29">        this.accountRepository = accountRepository;</span>
+<span class="fc" id="L30">        this.companyApiService = companyApiService;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Processes the request to open a new corporate current account.
+     * 
+     * @param openAccountDTO Object containing the company's registration and
+     *                       financial data.
+     * @return OpenAccountResponse containing the assigned business account number.
+     * @throws AccountAlreadyExistsException       if an active account exists for
+     *                                             the company registration.
+     * @throws BlacklistedAadharOrCompanyException if the company is on the
+     *                                             restricted list.
+     */
+    @Override
+    public OpenAccountResponse open(OpenAccountDTO openAccountDTO)
+            throws AccountCreationException, AccountAlreadyExistsException, BlacklistedAadharOrCompanyException {
+
+<span class="fc" id="L48">        OpenCurrentAccountDTO currentAccountDto = (OpenCurrentAccountDTO) openAccountDTO;</span>
+<span class="fc" id="L49">        logger.info(&quot;Opening current account for company: {}&quot;, currentAccountDto.getCompanyName());</span>
+
+        try {
+            // Verify that no other active current account is using this registration number
+<span class="fc" id="L53">            checkIfCurrentAccountExists(currentAccountDto.getRegistrationNumber());</span>
+
+            // Ensure the company or its registration ID is not flagged in the corporate
+            // blacklist
+<span class="fc" id="L57">            checkIfCompanyIsBlacklisted(currentAccountDto.getRegistrationNumber());</span>
+
+            // Contact the external Company API to verify the validity of the
+            // registration number
+<span class="fc" id="L61">            checkIfCompanyIsValidWithApi(currentAccountDto.getRegistrationNumber());</span>
+
+            // Generate a unique identifier for the new corporate account
+<span class="fc" id="L64">            String accountNumber = generateAccountNumber();</span>
+<span class="fc" id="L65">            currentAccountDto.setAccountNumber(accountNumber);</span>
+
+            // Create the corporate account entity and record the activation timestamp
+<span class="fc" id="L68">            CurrentAccount ca = createCurrentAccount(currentAccountDto, accountNumber);</span>
+<span class="fc" id="L69">            ca.setActive(true);</span>
+<span class="fc" id="L70">            ca.setActivatedDate(LocalDateTime.now());</span>
+
+            // Persist to DB
+<span class="fc" id="L73">            storeAccountInformation(ca);</span>
+
+            // Log the account creation for system auditing and reporting
+<span class="fc" id="L76">            logAccountCreation(ca.getAccountNumber());</span>
+<span class="fc" id="L77">            logger.info(&quot;Current account {} created successfully&quot;, accountNumber);</span>
+
+            // Return the response with the company's new account details
+<span class="fc" id="L80">            return new OpenAccountResponse(currentAccountDto);</span>
+<span class="fc" id="L81">        } catch (Exception e) {</span>
+<span class="fc" id="L82">            logger.error(&quot;Failed to open current account: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L83">            throw AccountCreationException.wrap(e);</span>
+        }
+    }
+
+    //
+    // PRIVATE METHODS
+    //
+
+    private boolean checkIfCurrentAccountExists(String registrationNumber) throws AccountAlreadyExistsException {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (accountRepository.checkIfCurrentAccountExists(registrationNumber)) {</span>
+<span class="fc" id="L93">            logger.warn(&quot;Current account already exists for registration: {}&quot;, registrationNumber);</span>
+<span class="fc" id="L94">            throw new AccountAlreadyExistsException(</span>
+                    &quot;Active current account already exists for this registration number.&quot;);
+        }
+<span class="fc" id="L97">        return false;</span>
+    }
+
+    private boolean checkIfCompanyIsBlacklisted(String registrationNumber) throws BlacklistedAadharOrCompanyException {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (accountRepository.checkIfCompanyIsBlacklisted(registrationNumber)) {</span>
+<span class="fc" id="L102">            logger.warn(&quot;Company is blacklisted: {}&quot;, registrationNumber);</span>
+<span class="fc" id="L103">            throw new BlacklistedAadharOrCompanyException(&quot;Company registration number is blacklisted.&quot;);</span>
+        }
+<span class="fc" id="L105">        return false;</span>
+    }
+
+    private boolean checkIfCompanyIsValidWithApi(String registrationNumber) {
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (!companyApiService.checkIfCompanyRegistrationIsValid(registrationNumber)) {</span>
+<span class="nc" id="L110">            logger.warn(&quot;Company API validation failed for: {}&quot;, registrationNumber);</span>
+<span class="nc" id="L111">            throw new RuntimeException(&quot;Invalid company registration number according to API.&quot;);</span>
+        }
+<span class="fc" id="L113">        return true;</span>
+    }
+
+    private String generateAccountNumber() {
+<span class="fc" id="L117">        return accountRepository.generateAccountNumber();</span>
+    }
+
+    private CurrentAccount createCurrentAccount(OpenCurrentAccountDTO dto, String accountNumber) {
+<span class="fc" id="L121">        return new CurrentAccount(</span>
+                accountNumber,
+<span class="fc" id="L123">                dto.getName(),</span>
+<span class="fc" id="L124">                dto.getInitialAmount(),</span>
+<span class="fc" id="L125">                Privilege.valueOf(dto.getPrivilegeDTO().name()),</span>
+<span class="fc" id="L126">                dto.getPinNumber(),</span>
+<span class="fc" id="L127">                dto.getCompanyName(),</span>
+<span class="fc" id="L128">                dto.getWebsiteURL(),</span>
+<span class="fc" id="L129">                dto.getRegistrationNumber());</span>
+    }
+
+    private void storeAccountInformation(CurrentAccount account) {
+<span class="fc" id="L133">        accountRepository.storeAccountInformation(account);</span>
+<span class="fc" id="L134">    }</span>
+
+    private void logAccountCreation(String accountNumber) {
+<span class="fc" id="L137">        System.out.println(&quot;Current Account &quot; + accountNumber + &quot; created successfully.&quot;);</span>
+<span class="fc" id="L138">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

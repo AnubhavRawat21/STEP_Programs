@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountServiceImplFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.services</a> &gt; <span class="el_source">AccountServiceImplFactory.java</span></div><h1>AccountServiceImplFactory.java</h1><pre class="source lang-java linenums">package com.gdb.services;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.gdb.dtos.OpenAccountDTO;
+import com.gdb.dtos.OpenCurrentAccountDTO;
+import com.gdb.dtos.OpenSavingsAccountDTO;
+
+/**
+ * AccountServiceImplFactory
+ * Singleton factory for creating/retrieving the specific account service implementation.
+ */
+public class AccountServiceImplFactory {
+<span class="fc" id="L14">    private static final AccountServiceImplFactory INSTANCE = new AccountServiceImplFactory();</span>
+<span class="fc" id="L15">    private final Map&lt;Class&lt;? extends OpenAccountDTO&gt;, IAccountServiceImpl&gt; registry = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L17">    private AccountServiceImplFactory() {</span>
+<span class="fc" id="L18">        registerDefaults();</span>
+<span class="fc" id="L19">    }</span>
+
+    public static AccountServiceImplFactory getInstance() {
+<span class="fc" id="L22">        return INSTANCE;</span>
+    }
+
+    private void registerDefaults() {
+        // Default implementations are registered lazily on first access
+<span class="fc" id="L27">    }</span>
+
+    public void register(Class&lt;? extends OpenAccountDTO&gt; dtoClass, IAccountServiceImpl impl) {
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (registry.containsKey(dtoClass)) {</span>
+<span class="nc" id="L31">            throw new IllegalStateException(&quot;Implementation already registered for: &quot; + dtoClass.getName());</span>
+        }
+<span class="fc" id="L33">        registry.put(dtoClass, impl);</span>
+<span class="fc" id="L34">    }</span>
+
+    public IAccountServiceImpl create(Class&lt;? extends OpenAccountDTO&gt; dtoClass) {
+<span class="fc" id="L37">        IAccountServiceImpl impl = registry.get(dtoClass);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (impl == null) {</span>
+<span class="fc" id="L39">            throw new IllegalArgumentException(&quot;No implementation registered for: &quot; + dtoClass.getName());</span>
+        }
+<span class="fc" id="L41">        return impl;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

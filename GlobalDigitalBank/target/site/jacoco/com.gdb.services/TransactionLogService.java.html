@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionLogService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.services</a> &gt; <span class="el_source">TransactionLogService.java</span></div><h1>TransactionLogService.java</h1><pre class="source lang-java linenums">package com.gdb.services;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.gdb.models.FundTransfer;
+import com.gdb.models.Transaction;
+import com.gdb.models.TransactionType;
+import com.gdb.store.TransactionLogStore;
+
+/**
+ * TransactionLogService
+ */
+<span class="fc" id="L16">public class TransactionLogService {</span>
+
+    public void logTransfer(FundTransfer transfer, double fromBalanceAfter, double toBalanceAfter) {
+<span class="fc" id="L19">        LocalDateTime now = LocalDateTime.now();</span>
+<span class="fc" id="L20">        LocalDate date = now.toLocalDate();</span>
+
+        // FromAccount's Record
+<span class="fc" id="L23">        Transaction out = new Transaction(</span>
+                TransactionType.TRANSFER_OUT,
+<span class="fc" id="L25">                transfer.getTransferAmount(),</span>
+                fromBalanceAfter,
+                now,
+<span class="fc" id="L28">                &quot;Transfer to &quot; + transfer.getToAccount().getAccountNumber() + &quot; via &quot; + transfer.getTransferMode());</span>
+<span class="fc" id="L29">        addEntry(transfer.getFromAccount().getAccountNumber(), date, TransactionType.TRANSFER_OUT, out);</span>
+
+        // ToAccount's Record
+<span class="fc" id="L32">        Transaction in = new Transaction(</span>
+                TransactionType.TRANSFER_IN,
+<span class="fc" id="L34">                transfer.getTransferAmount(),</span>
+                toBalanceAfter,
+                now,
+<span class="fc" id="L37">                &quot;Transfer from &quot; + transfer.getFromAccount().getAccountNumber() + &quot; via &quot; + transfer.getTransferMode());</span>
+<span class="fc" id="L38">        addEntry(transfer.getToAccount().getAccountNumber(), date, TransactionType.TRANSFER_IN, in);</span>
+<span class="fc" id="L39">    }</span>
+
+    public void logWithdraw(String accountNum, double amount, double newBalance) {
+<span class="fc" id="L42">        LocalDateTime now = LocalDateTime.now();</span>
+<span class="fc" id="L43">        Transaction t = new Transaction(TransactionType.WITHDRAW, amount, newBalance, now, &quot;Cash withdrawal&quot;);</span>
+<span class="fc" id="L44">        addEntry(accountNum, now.toLocalDate(), TransactionType.WITHDRAW, t);</span>
+<span class="fc" id="L45">    }</span>
+
+    public void logDeposit(String accountNum, double amount, double newBalance) {
+<span class="nc" id="L48">        LocalDateTime now = LocalDateTime.now();</span>
+<span class="nc" id="L49">        Transaction t = new Transaction(TransactionType.DEPOSIT, amount, newBalance, now, &quot;Cash deposit&quot;);</span>
+<span class="nc" id="L50">        addEntry(accountNum, now.toLocalDate(), TransactionType.DEPOSIT, t);</span>
+<span class="nc" id="L51">    }</span>
+
+    public double getDailyTransferTotal(String accountNum, LocalDate date) {
+<span class="fc" id="L54">        var accountLogs = TransactionLogStore.logs.get(accountNum);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (accountLogs == null)</span>
+<span class="fc" id="L56">            return 0.0;</span>
+
+<span class="fc" id="L58">        var dateLogs = accountLogs.get(date);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (dateLogs == null)</span>
+<span class="fc" id="L60">            return 0.0;</span>
+
+<span class="fc" id="L62">        var transferOutLogs = dateLogs.get(TransactionType.TRANSFER_OUT);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (transferOutLogs == null)</span>
+<span class="fc" id="L64">            return 0.0;</span>
+
+<span class="fc" id="L66">        return transferOutLogs.stream()</span>
+<span class="fc" id="L67">                .mapToDouble(Transaction::getAmount)</span>
+<span class="fc" id="L68">                .sum();</span>
+    }
+
+    private void addEntry(String accountNum, LocalDate date, TransactionType type, Transaction transaction) {
+<span class="fc" id="L72">        TransactionLogStore.logs</span>
+<span class="fc" id="L73">                .computeIfAbsent(accountNum, k -&gt; new HashMap&lt;&gt;())</span>
+<span class="fc" id="L74">                .computeIfAbsent(date, k -&gt; new HashMap&lt;&gt;())</span>
+<span class="fc" id="L75">                .computeIfAbsent(type, k -&gt; new ArrayList&lt;&gt;())</span>
+<span class="fc" id="L76">                .add(transaction);</span>
+<span class="fc" id="L77">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

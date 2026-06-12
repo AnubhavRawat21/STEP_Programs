@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpAadharApiService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GlobalDigitalBankConsoleApp</a> &gt; <a href="index.source.html" class="el_package">com.gdb.apis.integrations</a> &gt; <span class="el_source">HttpAadharApiService.java</span></div><h1>HttpAadharApiService.java</h1><pre class="source lang-java linenums">package com.gdb.apis.integrations;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * HttpAadharApiService
+ * Implementation of IAadharApiService that calls the external Aadhar API.
+ */
+public class HttpAadharApiService implements IAadharApiService {
+<span class="fc" id="L16">    private static final Logger logger = LogManager.getLogger(HttpAadharApiService.class);</span>
+    private final HttpClient httpClient;
+<span class="fc" id="L18">    private final String API_URL = &quot;https://aadhar-service.vercel.app/api/v1/verify/&quot;;</span>
+
+<span class="fc" id="L20">    public HttpAadharApiService() {</span>
+<span class="fc" id="L21">        this.httpClient = HttpClient.newBuilder()</span>
+<span class="fc" id="L22">                .connectTimeout(Duration.ofSeconds(10))</span>
+<span class="fc" id="L23">                .build();</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    public boolean checkIfAadharIsValid(String aadharNumber) {
+<span class="fc" id="L28">        logger.info(&quot;Validating Aadhar number with external service: {}&quot;, aadharNumber);</span>
+        try {
+<span class="fc" id="L30">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L31">                    .uri(URI.create(API_URL + aadharNumber))</span>
+<span class="fc" id="L32">                    .GET()</span>
+<span class="fc" id="L33">                    .build();</span>
+
+<span class="fc" id="L35">            HttpResponse&lt;String&gt; response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());</span>
+
+            // the API returns 200 OK for a valid Aadhar
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            boolean isValid = response.statusCode() == 200;</span>
+<span class="fc" id="L39">            logger.info(&quot;Aadhar validation result for {}: {}&quot;, aadharNumber, isValid);</span>
+<span class="fc" id="L40">            return isValid;</span>
+<span class="fc" id="L41">        } catch (InterruptedException e) {</span>
+<span class="fc" id="L42">            logger.error(&quot;Interrupted while calling Aadhar API: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L43">            Thread.currentThread().interrupt();</span>
+<span class="fc" id="L44">            return false;</span>
+<span class="fc" id="L45">        } catch (Exception e) {</span>
+<span class="fc" id="L46">            logger.error(&quot;Error calling Aadhar API: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L47">            return false;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
