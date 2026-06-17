@@ -112,8 +112,25 @@ public class TransactionService implements ITransactionService {
         // 6. Call transactionRepository.transferAmount to execute changes.
         // 7. Log the transfer using transactionLogService.logTransfer.
         // 8. Return response.
+        //problems-> how we will know which A/c number is wrong we should
+        //catch the exception here only
+        Account accountSender=getAccount(dto.getFromAccountNumber());
+        checkAccountIsActive(accountSender);
+        Account accountReceiver=getAccount(dto.getToAccountNumber());
+        checkAccountIsActive(accountReceiver);
+
+
+        checkPinNumber(accountSender.getPinNumber(), dto.getPinNumber());
+        checkSufficientFunds(accountSender.getBalance(),dto.getTransferAmount());
+        checkTransferLimit(accountSender,dto.getTransferAmount());
+
+        dto.setMinimumBalanceWarning(shouldWarnMinimumBalance(accountSender.getBalance(),dto.getTransferAmount(),accountSender.getPrivilege()));
+
+        transactionRepository.transferAmount(accountSender.getAccountNumber(),accountReceiver.getAccountNumber(), dto.getTransferAmount());
+
+        //problem-where is fundTransfer object
+
         dto.setNewBalance(0.0);
-        dto.setMinimumBalanceWarning(false);
         return new TransferResponse(dto);
     }
 

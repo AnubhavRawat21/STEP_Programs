@@ -1,0 +1,7 @@
+[2026-06-16 05:04:42] [INFO ] [AccountController] - Controller: Received request to close account 1000000002
+[2026-06-16 05:04:42] [INFO ] [AccountController] - Controller: Account 1000000002 closed successfully
+[2026-06-16 05:06:08] [INFO ] [AccountController] - Controller: Received request to open account for Anubhav
+[2026-06-16 05:06:08] [INFO ] [AccountServiceSavingsImpl] - Opening savings account for: Anubhav
+[2026-06-16 05:06:08] [WARN ] [AccountServiceSavingsImpl] - Aadhar API validation failed for: 200754588381
+[2026-06-16 05:06:08] [ERROR] [AccountServiceSavingsImpl] - Failed to open savings account: Invalid Aadhar number according to API.
+[2026-06-16 05:06:08] [ERROR] [AccountController] - Controller: Account opening failed: Invalid Aadhar number according to API.

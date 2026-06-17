@@ -43,3 +43,4 @@ com.gdb.exceptions.AccountRecordNotFoundException: Account record not found
 	at com.gdb.ui.HomeUI.showUI(HomeUI.java:34) [classes/:?]
 	at Main.main(Main.java:65) [classes/:?]
 [2026-06-12 07:06:50] [ERROR] [TransactionController] - Account record not found
+[2026-06-12 07:09:17] [ERROR] [TransactionController] - Account record not found
